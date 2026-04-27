@@ -26,10 +26,12 @@ private:
   Register getBaseAddrReg(const MachineInstr &MI) const {
     const MCInstrDesc &Desc = MI.getDesc();
     int MemOp = X86II::getMemoryOperandNo(Desc.TSFlags);
-    if (MemOp < 0) return Register();
+    if (MemOp < 0)
+      return Register();
     MemOp += X86II::getOperandBias(Desc);
     const MachineOperand &Base = MI.getOperand(MemOp + X86::AddrBaseReg);
-    return (Base.isReg() && Base.getReg().isValid()) ? Base.getReg() : Register();
+    return (Base.isReg() && Base.getReg().isValid()) ? Base.getReg()
+                                                     : Register();
   }
 };
 } // namespace
@@ -49,11 +51,13 @@ bool SavvaDariyaInsertCheckPass::runOnMachineFunction(MachineFunction &MF) {
   // 2. Собираем инструкции, которые требуют проверки
   SmallVector<MachineInstr *, 16> Targets;
   for (auto &MBB : MF) {
-    if (&MBB == CommonTrapBB) continue;
+    if (&MBB == CommonTrapBB)
+      continue;
     for (auto &MI : MBB) {
       if (MI.mayLoad() || MI.mayStore()) {
         Register R = getBaseAddrReg(MI);
-        if (R && !isSystemReg(R)) Targets.push_back(&MI);
+        if (R && !isSystemReg(R))
+          Targets.push_back(&MI);
       }
     }
   }
@@ -71,7 +75,7 @@ bool SavvaDariyaInsertCheckPass::runOnMachineFunction(MachineFunction &MF) {
 
     // Переносим "хвост" старого блока в новый
     ContBB->splice(ContBB->end(), OrigBB, MI->getIterator(), OrigBB->end());
-    
+
     // Переносим связи (Successors) и PHI-ноды
     ContBB->transferSuccessorsAndUpdatePHIs(OrigBB);
 
@@ -94,5 +98,6 @@ bool SavvaDariyaInsertCheckPass::runOnMachineFunction(MachineFunction &MF) {
   return Changed;
 }
 
-static RegisterPass<SavvaDariyaInsertCheckPass> 
-    X("savvadariya-insert-check", "Savva Dariya: inserting a null pointer check", false, false);
+static RegisterPass<SavvaDariyaInsertCheckPass>
+    X("savvadariya-insert-check",
+      "Savva Dariya: inserting a null pointer check", false, false);
