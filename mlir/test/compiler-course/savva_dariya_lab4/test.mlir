@@ -1,4 +1,4 @@
-// RUN: mlir-opt -load-pass-plugin=%mlir_lib_dir//SavvaDariyaCopyToLoopPass_Savva_Dariya_FIIT1_MLIR_MLIR%shlibext \
+// RUN: mlir-opt -load-pass-plugin=%mlir_lib_dir//SavvaDariyaCopyToLoopPass_Savva_Dariya_FIIT1_MLIR%shlibext \
 // RUN: --pass-pipeline="builtin.module(/savva-copy-to-loop)" %s | FileCheck %s
 
 
