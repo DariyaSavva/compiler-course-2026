@@ -38,7 +38,7 @@ func.func @copy_dynamic(%A: memref<?xi32>, %B: memref<?xi32>) {
 // CHECK-NOT: scf.for
 func.func @no_copy(%A: memref<4xi32>) {
   %c0 = arith.constant 0 : index
-  %0 = memref.load %A[%c0]
+  %0 = memref.load %A[%c0] : memref<4xi32>
   return
 }
 
