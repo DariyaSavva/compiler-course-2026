@@ -63,7 +63,7 @@ func.func @no_copy(%A: memref<4xi32>) {
 
 // CHECK-LABEL: func.func @multi_copy
 
-// CHECK: scf.for %[[I1:.*]]
+// CHECK: scf.for %[[I1:[a-zA-Z0-9_]+]]
 // CHECK: memref.load %arg0[%[[I1]]]
 // CHECK: memref.store
 
