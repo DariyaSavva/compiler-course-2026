@@ -4,11 +4,11 @@
 
 // CHECK-LABEL: func.func @copy_1d
 
-// CHECK-DAG: %[[C0:.*]] = arith.constant 0 : index
-// CHECK-DAG: %[[C1:.*]] = arith.constant 1 : index
-// CHECK-DAG: %[[C4:.*]] = arith.constant 4 : index
+// CHECK-DAG: %[[C0:[a-zA-Z0-9_]+]] = arith.constant 0 : index
+// CHECK-DAG: %[[C1:[a-zA-Z0-9_]+]] = arith.constant 1 : index
+// CHECK-DAG: %[[C4:[a-zA-Z0-9_]+]] = arith.constant 4 : index
 
-// CHECK: scf.for %[[I:.*]] = %[[C0]] to %[[C4]] step %[[C1]] {
+// CHECK: scf.for %[[I:[a-zA-Z0-9_]+]] = %[[C0]] to %[[C4]] step %[[C1]] {
 // CHECK: memref.load %arg0[%[[I]]]
 // CHECK: memref.store
 func.func @copy_1d(%A: memref<4xi32>, %B: memref<4xi32>) {
@@ -18,15 +18,16 @@ func.func @copy_1d(%A: memref<4xi32>, %B: memref<4xi32>) {
 
 
 
+
 // CHECK-LABEL: func.func @copy_2d
 
-// CHECK-DAG: %[[C0:.*]] = arith.constant 0 : index
-// CHECK-DAG: %[[C1:.*]] = arith.constant 1 : index
-// CHECK-DAG: %[[C2:.*]] = arith.constant 2 : index
-// CHECK-DAG: %[[C3:.*]] = arith.constant 3 : index
+// CHECK-DAG: %[[C0:[a-zA-Z0-9_]+]] = arith.constant 0 : index
+// CHECK-DAG: %[[C1:[a-zA-Z0-9_]+]] = arith.constant 1 : index
+// CHECK-DAG: %[[C2:[a-zA-Z0-9_]+]] = arith.constant 2 : index
+// CHECK-DAG: %[[C3:[a-zA-Z0-9_]+]] = arith.constant 3 : index
 
-// CHECK: scf.for %[[I:.*]] = %[[C0]] to %[[C2]] step %[[C1]] {
-// CHECK: scf.for %[[J:.*]] = %[[C0]] to %[[C3]] step %[[C1]] {
+// CHECK: scf.for %[[I:[a-zA-Z0-9_]+]] = %[[C0]] to %[[C2]] step %[[C1]] {
+// CHECK: scf.for %[[J:[a-zA-Z0-9_]+]] = %[[C0]] to %[[C3]] step %[[C1]] {
 // CHECK: memref.load %arg0[%[[I]], %[[J]]]
 // CHECK: memref.store
 func.func @copy_2d(%A: memref<2x3xi32>, %B: memref<2x3xi32>) {
@@ -39,11 +40,11 @@ func.func @copy_2d(%A: memref<2x3xi32>, %B: memref<2x3xi32>) {
 
 // CHECK-LABEL: func.func @copy_dynamic
 
-// CHECK-DAG: %[[C0:.*]] = arith.constant 0 : index
-// CHECK-DAG: %[[C1:.*]] = arith.constant 1 : index
+// CHECK-DAG: %[[C0:[a-zA-Z0-9_]+]] = arith.constant 0 : index
+// CHECK-DAG: %[[C1:[a-zA-Z0-9_]+]] = arith.constant 1 : index
 
-// CHECK: %[[DIM:.*]] = memref.dim %arg0
-// CHECK: scf.for %[[I:.*]] = %[[C0]] to %[[DIM]] step %[[C1]] {
+// CHECK: %[[DIM:[a-zA-Z0-9_]+]] = memref.dim %arg0
+// CHECK: scf.for %[[I:[a-zA-Z0-9_]+]] = %[[C0]] to %[[DIM]] step %[[C1]] {
 // CHECK: memref.load %arg0[%[[I]]]
 // CHECK: memref.store
 func.func @copy_dynamic(%A: memref<?xi32>, %B: memref<?xi32>) {
@@ -67,7 +68,7 @@ func.func @no_copy(%A: memref<4xi32>) {
 // CHECK: memref.load %arg0[%[[I1]]]
 // CHECK: memref.store
 
-// CHECK: scf.for %[[I2:.*]]
+// CHECK: scf.for %[[I2:[a-zA-Z0-9_]+]]
 // CHECK: memref.load %arg1[%[[I2]]]
 // CHECK: memref.store
 func.func @multi_copy(%A: memref<4xi32>, %B: memref<4xi32>, %C: memref<4xi32>) {
